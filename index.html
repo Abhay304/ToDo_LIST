@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<style>
+    body {
+        background: linear-gradient(135deg, #030c2f, #e69696);
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        display: block;
+    }
+
+    #dynamic-list :hover {
+        background-color: #e69697;
+
+    }
+
+    .cutText {
+        text-decoration-line: line-through;
+    }
+
+    @media only screen and (max-width: 100%) {}
+</style>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>TO DO LIST</title>
+
+</head>
+
+
+<body>
+
+    <nav class="navbar navbar-expand navbar-light bg-light">
+        <!-- <ul class="nav navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link btn" href="#">Home<span class="sr-only">(current)</span></a>
+            </li>
+        </ul> -->
+        <p class="navbar-text"
+            style="text-align : center !important; float:inherit;font-size:  -webkit-xxx-large;color: black;font-family: cursive;">
+            TO -DO LIST</p>
+    </nav>
+    <div class="container">
+        <div class="container-fluid">
+            <form action="">
+                <div class="col-xs-12" style="display: inline-flex">
+                    <input type="text" id="inputList" class="form-control mandatory"
+                        placeholder="Eg. Add Fruits To basket">
+                    <button class="btn btn-primary" type="button" id="create" onclick="addList()">Create</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    <div class="container" style="padding-bottom :2px">
+        <div class="container-fluid">
+            <div class="col-xs-12 " style="padding-top: 10%;">
+                <span><strong style="text-align: center;display: block;font-size: x-large;color: black;">TO
+                        DO</strong></span>
+
+                <ul class="list-group " id="dynamic-list" style="padding-left: 150px;padding-right: 150px;">
+
+                </ul>
+
+                <ul class="list-group">
+                    <li style="padding-top: 10px;text-align: center;">
+                        <button id="Delete" class="btn btn-danger" style="display: none;">Delete</button></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function addList() {
+            if (document.getElementById('inputList').value != "") {
+
+                document.getElementById('Delete').style.display="";
+                var i = document.getElementById("dynamic-list").getElementsByClassName("list-group-item").length;
+                var ul = document.getElementById("dynamic-list");
+                var li = document.createElement("li");
+                li.id = 'li' + i;
+                var input = document.createElement("input");
+                input.id = 'inp' + i;
+                i++;
+                var text = "      " + document.getElementById('inputList').value;
+                var t = document.createTextNode(text);
+                input.setAttribute("type", "checkbox");
+                li.classList.add("list-group-item");
+                li.appendChild(input);
+                ul.append(li);
+                li.appendChild(t);
+
+
+            } else {
+                alert('List value cannot be blank')
+            }
+            document.getElementById('inputList').value = ""
+        }
+
+        // For checking
+
+        document.getElementById("dynamic-list").addEventListener('click', boxchecked);
+
+        function boxchecked(event) {
+            const element = event.target;
+            console.log(element.type);
+            console.log(element.parentNode.style.textDecoration)
+            if (element.type == 'checkbox' && (element.parentNode.style.textDecoration == '' ||
+                    element.parentNode.style.textDecoration == 'none')) {
+                element.parentNode.style.textDecoration = 'line-through';
+                //element.parentNode.style.backgroundColor = '#986773';
+            } else {
+                element.parentNode.style.textDecoration = 'none';
+            }
+        }
+
+        // For removing
+        document.getElementById("Delete").addEventListener('click', remove);
+        document.getElementById("dynamic-list").getElementsByClassName("list-group-item").length
+        var list = document.getElementById("dynamic-list");
+
+        function remove(e) {
+            console.log(e.target)
+            var ulLenghth = document.getElementById("dynamic-list").getElementsByClassName("list-group-item").length
+            var list1 = document.getElementById("dynamic-list");
+            if (ulLenghth > 0) {
+                for (var i = 0; i <= 10; i++) {
+                    if (document.getElementById("inp" + i) != null) {
+                        if (document.getElementById("inp" + i).checked == true) {
+                            childLi = document.getElementById("li" + i)
+                            list1.removeChild(childLi);
+                        }
+                    }
+                }
+            } else {
+                alert('There is no List to delete')
+            }
+        }
+    </script>
+</body>
+
+</html>
